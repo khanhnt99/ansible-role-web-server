@@ -1,0 +1,7 @@
+---
+# defaults file for netplan
+netplan_config_file: "/etc/netplan/ansible-config.yaml"
+
+netplan_renderer:
+
+netplan_apply: True

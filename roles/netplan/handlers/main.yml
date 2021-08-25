@@ -1,0 +1,13 @@
+---
+# handlers file for netplan
+- name: Generate Netplan Configuration
+  command: netplan generate
+  listen: netplan generate config
+  notify: netplan apply config
+  become: True
+
+- name: Applying Netplan Configuration
+  command: netplan apply
+  listen: netplan apply config 
+  become: True
+  when: netplan_apply

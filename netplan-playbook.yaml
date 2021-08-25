@@ -1,0 +1,16 @@
+---
+- hosts: all
+  roles: 
+    - role: netplan
+      become: yes
+      netplan_enabled: True
+
+      netplan_config_file: "/etc/netplan/50-cloud-netplan.yaml"
+      netplan_renderer: networkd
+
+      netplan_configuration:
+        network:
+          version: 2
+          ethernets:
+            ens3:
+              dhcp4: True
