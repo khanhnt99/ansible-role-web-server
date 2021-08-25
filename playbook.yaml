@@ -1,0 +1,15 @@
+---
+- hosts: web-server
+  become: true
+  roles:
+    - apache
+  # Thay vi liet ke tung thanh phan thi role apache se dinh nghia chay tung tac vu do
+  vars:
+    - docs_root: "/var/www/example"
+    - http_host: "example"
+    - http_conf: "example.conf"
+    - http_port: "80"
+    - disable_default: true
+  
+  
+

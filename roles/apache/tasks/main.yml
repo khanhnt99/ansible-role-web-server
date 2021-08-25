@@ -1,0 +1,33 @@
+---
+# tasks file for apache
+- name: Update apt-get and cache
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Install apache
+  apt: name=apache2 update_cache=yes state=latest
+
+- name: Create document root
+  file: 
+    path: "{{ docs_root }}"
+    state: directory
+    owner: root
+
+- name: Copy index test page
+  template:
+    src: "files/index.html"
+    dest: "{{ docs_root }}/index.html"
+
+- name: Set up Apache virtualhost
+  template:
+    src: "apache.conf"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}"
+
+- name: Enable new site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+  notify: reload apache
+
+- name: Disable default apache site
+  shell: /usr/sbin/a2dissite 000-default.conf
+  when: disable_default
+  notify: reload apache
+
